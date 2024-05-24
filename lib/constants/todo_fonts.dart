@@ -1,3 +1,3 @@
-class TodoFonts {
+class TodoFontFamily {
   static const pretendard = "Pretendard";
 }
