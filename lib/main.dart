@@ -18,6 +18,7 @@ class MyApp extends StatelessWidget {
     removeSystemNavigationBarColor();
 
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(fontFamily: TodoFontFamily.pretendard),
       home: const HomeScreen(),
     );
