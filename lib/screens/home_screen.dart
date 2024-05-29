@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:simple_todo_list/components/todo_add_box.dart';
+import 'package:simple_todo_list/components/todo_search_box.dart';
 import 'package:simple_todo_list/constants/todo_colors.dart';
-import 'package:simple_todo_list/screens/todo_add_box.dart';
-import 'package:simple_todo_list/screens/todo_search_box.dart';
+import 'package:simple_todo_list/models/Todo.dart';
+
+import '../components/todo_item.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    List<Todo> todoList = Todo.createDummyList();
+
     return Scaffold(
       backgroundColor: TodoColors.background,
       appBar: AppBar(
+        backgroundColor: TodoColors.background,
         title: const Text(
           "Todo App",
           style: TextStyle(
@@ -36,13 +42,38 @@ class HomeScreen extends StatelessWidget {
       ),
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 15),
-        child: const Column(
+        child: Column(
           children: [
-            TodoSearchBox(),
+            const TodoSearchBox(),
             Expanded(
-              child: Column(),
+              child: ListView(
+                children: [
+                  Column(
+                    children: [
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        margin: const EdgeInsets.only(
+                          top: 10,
+                          bottom: 20,
+                        ),
+                        child: const Text(
+                          "모든 할 일",
+                          style: TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                      for (var todoItem in todoList)
+                        TodoItem(
+                          todo: todoItem,
+                        ),
+                    ],
+                  ),
+                ],
+              ),
             ),
-            TodoAddBox()
+            const TodoAddBox()
           ],
         ),
       ),
