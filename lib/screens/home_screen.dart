@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:simple_todo_list/components/todo_add_box.dart';
+import 'package:simple_todo_list/components/todo_item.dart';
 import 'package:simple_todo_list/components/todo_search_box.dart';
 import 'package:simple_todo_list/constants/todo_colors.dart';
 import 'package:simple_todo_list/models/Todo.dart';
-
-import '../components/todo_item.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -46,31 +45,29 @@ class HomeScreen extends StatelessWidget {
           children: [
             const TodoSearchBox(),
             Expanded(
-              child: ListView(
-                children: [
-                  Column(
-                    children: [
-                      Container(
-                        alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.only(
-                          top: 10,
-                          bottom: 20,
-                        ),
-                        child: const Text(
-                          "모든 할 일",
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.w500,
-                          ),
+              child: ListView.separated(
+                itemCount: todoList.length + 1,
+                itemBuilder: (context, index) {
+                  if (index == 0) {
+                    return Container(
+                      margin: const EdgeInsets.only(top: 10, bottom: 20),
+                      child: const Text(
+                        '모든할일',
+                        style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.w500,
                         ),
                       ),
-                      for (var todoItem in todoList)
-                        TodoItem(
-                          todo: todoItem,
-                        ),
-                    ],
-                  ),
-                ],
+                    );
+                  }
+                  return TodoItem(
+                    todo: todoList[index - 1],
+                  );
+                },
+                separatorBuilder: (context, index) {
+                  if (index == 0) return const SizedBox.shrink();
+                  return const SizedBox(height: 5);
+                },
               ),
             ),
             const TodoAddBox()
