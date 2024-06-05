@@ -4,11 +4,14 @@ import 'package:simple_todo_list/models/Todo.dart';
 
 class TodoItem extends StatelessWidget {
   final Todo todo;
+  final Function(Todo) onPressedCheckBox;
+  final Function(String) onPressedDeleteIcon;
 
-  const TodoItem({
-    super.key,
-    required this.todo,
-  });
+  const TodoItem(
+      {super.key,
+      required this.todo,
+      required this.onPressedCheckBox,
+      required this.onPressedDeleteIcon});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +35,7 @@ class TodoItem extends StatelessWidget {
             constraints: const BoxConstraints(),
             color: TodoColors.point,
             onPressed: () {
-              print("");
+              onPressedCheckBox(todo);
             },
           ),
           Expanded(
@@ -42,10 +45,11 @@ class TodoItem extends StatelessWidget {
               child: Text(
                 todo.todoContent,
                 overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
+                style: TextStyle(
                   color: TodoColors.black,
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
+                  decoration: todo.isDone ? TextDecoration.lineThrough : null,
                 ),
               ),
             ),
@@ -66,7 +70,9 @@ class TodoItem extends StatelessWidget {
                 size: 18,
                 color: TodoColors.white,
               ),
-              onPressed: () {},
+              onPressed: () {
+                onPressedDeleteIcon(todo.id);
+              },
             ),
           )
         ],

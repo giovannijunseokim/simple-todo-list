@@ -5,13 +5,30 @@ import 'package:simple_todo_list/components/todo_search_box.dart';
 import 'package:simple_todo_list/constants/todo_colors.dart';
 import 'package:simple_todo_list/models/Todo.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    List<Todo> todoList = Todo.createDummyList();
+  State<HomeScreen> createState() => HomeScreenState();
+}
 
+class HomeScreenState extends State<HomeScreen> {
+  List<Todo> todoList = Todo.createDummyList();
+
+  void checkTodoItem(Todo todo) {
+    setState(() {
+      todo.isDone = !todo.isDone;
+    });
+  }
+
+  void deleteTodoItem(String id) {
+    setState(() {
+      todoList.removeWhere((todoItem) => todoItem.id == id);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: TodoColors.background,
       appBar: AppBar(
@@ -52,7 +69,7 @@ class HomeScreen extends StatelessWidget {
                     return Container(
                       margin: const EdgeInsets.only(top: 10, bottom: 20),
                       child: const Text(
-                        '모든할일',
+                        '모든 할 일',
                         style: TextStyle(
                           fontSize: 30,
                           fontWeight: FontWeight.w500,
@@ -62,6 +79,8 @@ class HomeScreen extends StatelessWidget {
                   }
                   return TodoItem(
                     todo: todoList[index - 1],
+                    onPressedCheckBox: checkTodoItem,
+                    onPressedDeleteIcon: deleteTodoItem,
                   );
                 },
                 separatorBuilder: (context, index) {
