@@ -14,6 +14,15 @@ class HomeScreen extends StatefulWidget {
 
 class HomeScreenState extends State<HomeScreen> {
   List<Todo> todoList = Todo.createDummyList();
+  final todoAddBoxController = TextEditingController();
+  final todoSearchBoxController = TextEditingController();
+  List<Todo> searchedTodoItems = [];
+
+  @override
+  void initState() {
+    super.initState();
+    searchedTodoItems = todoList;
+  }
 
   void checkTodoItem(Todo todo) {
     setState(() {
@@ -21,9 +30,48 @@ class HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  void addTodoItem(String todoContent) {
+    if (todoContent.trim().isNotEmpty) {
+      setState(() {
+        todoList.insert(
+          0,
+          Todo(
+            id: DateTime.now().toString(),
+            todoContent: todoContent,
+          ),
+        );
+        todoAddBoxController.clear();
+      });
+    }
+  }
+
   void deleteTodoItem(String id) {
     setState(() {
       todoList.removeWhere((todoItem) => todoItem.id == id);
+    });
+  }
+
+  void filterateTodoItem(String keyword) {
+    List<Todo> results = [];
+    if (keyword.isEmpty) {
+      results = todoList;
+    } else {
+      for (var todoItem in todoList) {
+        if (todoItem.todoContent
+            .toLowerCase()
+            .contains(keyword.toLowerCase())) {
+          results.add(todoItem);
+        }
+      }
+      results = todoList
+          .where((todoItem) => todoItem.todoContent
+              .toLowerCase()
+              .contains(keyword.toLowerCase()))
+          .toList();
+    }
+
+    setState(() {
+      searchedTodoItems = results;
     });
   }
 
@@ -60,10 +108,13 @@ class HomeScreenState extends State<HomeScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 15),
         child: Column(
           children: [
-            const TodoSearchBox(),
+            TodoSearchBox(
+              controller: todoSearchBoxController,
+              onChanged: filterateTodoItem,
+            ),
             Expanded(
               child: ListView.separated(
-                itemCount: todoList.length + 1,
+                itemCount: searchedTodoItems.length + 1,
                 itemBuilder: (context, index) {
                   if (index == 0) {
                     return Container(
@@ -78,7 +129,7 @@ class HomeScreenState extends State<HomeScreen> {
                     );
                   }
                   return TodoItem(
-                    todo: todoList[index - 1],
+                    todo: searchedTodoItems[index - 1],
                     onPressedCheckBox: checkTodoItem,
                     onPressedDeleteIcon: deleteTodoItem,
                   );
@@ -89,7 +140,10 @@ class HomeScreenState extends State<HomeScreen> {
                 },
               ),
             ),
-            const TodoAddBox()
+            TodoAddBox(
+              controller: todoAddBoxController,
+              onSubmitted: addTodoItem,
+            )
           ],
         ),
       ),

@@ -17,10 +17,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     removeSystemNavigationBarColor();
 
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(fontFamily: TodoFontFamily.pretendard),
-      home: const HomeScreen(),
+    return GestureDetector(
+      onTap: () {
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(fontFamily: TodoFontFamily.pretendard),
+        home: const HomeScreen(),
+      ),
     );
   }
 

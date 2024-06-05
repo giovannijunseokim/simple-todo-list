@@ -2,7 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:simple_todo_list/constants/todo_colors.dart';
 
 class TodoAddBox extends StatelessWidget {
-  const TodoAddBox({super.key});
+  final TextEditingController controller;
+  final Function(String) onSubmitted;
+
+  const TodoAddBox({
+    super.key,
+    required this.controller,
+    required this.onSubmitted,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -13,18 +20,23 @@ class TodoAddBox extends StatelessWidget {
         color: Colors.white,
         borderRadius: BorderRadius.circular(5),
       ),
-      child: const Row(
+      child: Row(
         children: [
-          Icon(
+          const Icon(
             Icons.add_rounded,
             color: TodoColors.black,
             size: 28,
           ),
           Expanded(
             child: Padding(
-              padding: EdgeInsets.only(left: 10),
+              padding: const EdgeInsets.only(left: 10),
               child: TextField(
-                decoration: InputDecoration(
+                controller: controller,
+                onSubmitted: onSubmitted,
+                onTapOutside: (event) {
+                  controller.clear();
+                },
+                decoration: const InputDecoration(
                   border: InputBorder.none,
                   hintText: '할 일 추가',
                   hintStyle: TextStyle(
