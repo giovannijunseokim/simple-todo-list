@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:simple_todo_list/components/todo_add_box.dart';
 import 'package:simple_todo_list/components/todo_item.dart';
+import 'package:simple_todo_list/components/todo_modify_dialog.dart';
 import 'package:simple_todo_list/components/todo_search_box.dart';
 import 'package:simple_todo_list/constants/todo_colors.dart';
 import 'package:simple_todo_list/models/Todo.dart';
@@ -75,6 +76,25 @@ class HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  void showModifyDialog(Todo todo) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return TodoModifyDialog(
+          todo: todo,
+          onSubmitted: modifyTodoItem,
+        );
+      },
+    );
+  }
+
+  void modifyTodoItem(String modifiedTodoContent, Todo todo) {
+    setState(() {
+      todo.todoContent = modifiedTodoContent;
+    });
+    Navigator.pop(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -132,6 +152,7 @@ class HomeScreenState extends State<HomeScreen> {
                     todo: searchedTodoItems[index - 1],
                     onPressedCheckBox: checkTodoItem,
                     onPressedDeleteIcon: deleteTodoItem,
+                    onTapTodoItem: showModifyDialog,
                   );
                 },
                 separatorBuilder: (context, index) {
