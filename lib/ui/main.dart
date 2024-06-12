@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:simple_todo_list/constants/todo_fonts.dart';
-import 'package:simple_todo_list/screens/home_screen.dart';
-
-import '../constants/todo_colors.dart';
+import 'package:simple_todo_list/ui/constants/todo_colors.dart';
+import 'package:simple_todo_list/ui/constants/todo_fonts.dart';
+import 'package:simple_todo_list/ui/screens/home_screen.dart';
 
 void main() {
   runApp(const MyApp());

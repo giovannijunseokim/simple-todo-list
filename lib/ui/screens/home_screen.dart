@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:simple_todo_list/components/todo_add_box.dart';
-import 'package:simple_todo_list/components/todo_item.dart';
-import 'package:simple_todo_list/components/todo_modify_dialog.dart';
-import 'package:simple_todo_list/components/todo_search_box.dart';
-import 'package:simple_todo_list/constants/todo_colors.dart';
-import 'package:simple_todo_list/models/Todo.dart';
+import 'package:simple_todo_list/domain/models/Todo.dart';
+import 'package:simple_todo_list/ui/components/todo_add_box.dart';
+import 'package:simple_todo_list/ui/components/todo_item.dart';
+import 'package:simple_todo_list/ui/components/todo_modify_dialog.dart';
+import 'package:simple_todo_list/ui/components/todo_search_box.dart';
+import 'package:simple_todo_list/ui/constants/todo_colors.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
