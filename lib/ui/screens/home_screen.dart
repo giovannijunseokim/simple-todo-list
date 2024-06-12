@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:simple_todo_list/domain/models/Todo.dart';
+import 'package:simple_todo_list/domain/models/todo.dart';
 import 'package:simple_todo_list/ui/components/todo_add_box.dart';
 import 'package:simple_todo_list/ui/components/todo_item.dart';
 import 'package:simple_todo_list/ui/components/todo_modify_dialog.dart';
