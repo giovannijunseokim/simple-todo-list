@@ -10,18 +10,6 @@ void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(TodoAdapter());
   await Hive.openBox<Todo>('todoList');
-  var box = Hive.box<Todo>('todoList');
-
-  box.add(Todo(
-    id: DateTime.now().toString(),
-    todoContent: 'Hive 연습하기',
-  ));
-
-  box.toMap().forEach((key, value) {
-    print(
-      '[key] $key, [value] id: ${value.id}| todoContent: ${value.todoContent}| isDone: ${value.isDone}',
-    );
-  });
 
   runApp(const MyApp());
 }
@@ -32,6 +20,15 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        systemNavigationBarColor: Colors.transparent,
+      ),
+    );
+    
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+
     removeSystemNavigationBarColor();
 
     return GestureDetector(
